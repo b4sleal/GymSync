@@ -1,0 +1,36 @@
+https://github.com/b4sleal/GymSync
+https://github.com/users/b4sleal/projects/3/views/1
+https://github.com/b4sleal/GymSync/wiki/
+
+
+
+
+Deliverables (what to submit)
+1. Working front-end (in GitHub repo)
+o Core screens implemented (matching Milestone 01 wireframes, updated if needed)
+o Primary workflow functional in the UI (even if still using mock data)
+
+ye but first one sec
+
+2. Database design package (PDF)
+o ER diagram (or clearly structured relational diagram)
+o SQL CREATE TABLE statements with:
+▪ primary keys, foreign keys (where relevant), constraints
+▪ sensible data types
+
+3. Back-end setup  (Node.js or PHP) (in repo)
+o Project skeleton and runnable server entry point
+o Initial routes/controllers structure (even if some endpoints are stubs)
+
+4. Updated GitHub Projects Kanban
+o Active movement of tasks across columns, clear ownership, and meaningful status
+
+5. Updated activity blog/wiki
+o At least two progress entries since Milestone 01: work completed, decisions made,
+blockers/resolutions
+
+6. README updated
+o How to run front-end/back-end locally (basic steps)
+o Team member contributions summary (brief)
+
+

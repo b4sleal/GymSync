@@ -1,0 +1,26 @@
+{
+  "name": "gymsync",
+  "version": "1.0.0",
+  "description": "Web app that helps students and adults plan, join, and maintain consistent workout routines",
+  "homepage": "https://github.com/b4sleal/GymSync#readme",
+  "bugs": {
+    "url": "https://github.com/b4sleal/GymSync/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/b4sleal/GymSync.git"
+  },
+  "license": "ISC",
+  "author": "Basleal Abshiro",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1"
+  }
+}
