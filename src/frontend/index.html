@@ -2,9 +2,107 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymSync | Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-This website is so good gang
+<body class="dashboard-body">
+<nav class="navbar">
+    <h1 class="logo">GymSync</h1>
+    <div class="nav-links">
+        <a href="#" class="nav-item">Profile</a>
+        <a href="landing.html" class="nav-item">Logout</a>
+    </div>
+</nav>
+
+<main class="dashboard-container">
+    <header class="dashboard-header">
+        <h2>Welcome back, Athlete!</h2>
+    </header>
+
+    <div class="dashboard-grid">
+        <section class="card streak-card">
+            <h3>Current Streak</h3>
+            <div class="streak-display">
+                <span class="streak-number">12</span>
+                <span class="streak-text">Days</span>
+            </div>
+            <p>Keep the fire burning! 🔥</p>
+        </section>
+
+        <section class="card daily-plan-card">
+            <h3>Today's Plan: Upper Body Power</h3>
+            <ul class="workout-list">
+                <li>
+                    <span>Bench Press</span>
+                    <span>4 sets x 8 reps</span>
+                </li>
+                <li>
+                    <span>Incline Dumbbell Press</span>
+                    <span>3 sets x 10 reps</span>
+                </li>
+                <li>
+                    <span>Pull-ups</span>
+                    <span>3 sets x To Failure</span>
+                </li>
+                <li>
+                    <span>Overhead Press</span>
+                    <span>4 sets x 8 reps</span>
+                </li>
+            </ul>
+            <a href="workout.html" style="text-decoration: none;">
+                <button class="btn-primary start-btn">Start Workout</button>
+            </a>
+        </section>
+
+        <section class="card recent-workouts-card">
+            <h3>Recent Workouts</h3>
+            <ul class="history-list">
+                <li>
+                    <div class="history-info">
+                        <strong>Leg Day</strong>
+                        <span class="date">Yesterday</span>
+                    </div>
+                    <span class="duration">45 min</span>
+                </li>
+                <li>
+                    <div class="history-info">
+                        <strong>Core & Cardio</strong>
+                        <span class="date">2 days ago</span>
+                    </div>
+                    <span class="duration">30 min</span>
+                </li>
+                <li>
+                    <div class="history-info">
+                        <strong>Pull Day</strong>
+                        <span class="date">4 days ago</span>
+                    </div>
+                    <span class="duration">60 min</span>
+                </li>
+            </ul>
+        </section>
+    </div>
+</main>
+
+<div id="gymsync-sidenav" style="height: 100%; width: 0; position: fixed; z-index: 9999; top: 0; left: 0; background-color: #121b2e; overflow-x: hidden; transition: 0.3s; padding-top: 60px; border-right: 1px solid #223255; box-shadow: 4px 0 10px rgba(0,0,0,0.5);">
+    <a href="javascript:void(0)" onclick="closeNav()" style="position: absolute; top: 10px; right: 20px; font-size: 36px; color: #9fb0d0; text-decoration: none;">&times;</a>
+    <a href="index.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #e8eefc; display: block; transition: 0.3s; border-bottom: 1px solid #223255;">Dashboard</a>
+    <a href="planner.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #e8eefc; display: block; transition: 0.3s; border-bottom: 1px solid #223255;">Planner</a>
+    <a href="workout.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #e8eefc; display: block; transition: 0.3s; border-bottom: 1px solid #223255;">Active Workout</a>
+    <a href="landing.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #e8eefc; display: block; transition: 0.3s; border-bottom: 1px solid #223255;">Logout</a>
+</div>
+
+<button onclick="openNav()" style="position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 9998; background-color: #e03939; color: white; border: none; padding: 12px 15px; cursor: pointer; border-radius: 0 8px 8px 0; font-size: 16px; font-weight: bold; box-shadow: 2px 2px 8px rgba(0,0,0,0.4);">
+    &#9776; Menu
+</button>
+
+<script>
+    function openNav() {
+        document.getElementById("gymsync-sidenav").style.width = "250px";
+    }
+    function closeNav() {
+        document.getElementById("gymsync-sidenav").style.width = "0";
+    }
+</script>
 </body>
 </html>

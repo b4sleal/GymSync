@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GymSync – Weekly Planner</title>
+    <link rel="stylesheet" href="css/planner.css" />
+</head>
+<body>
+
+<main class="container">
+    <section class="card">
+        <h1>Create a Workout</h1>
+        <p class="muted">Pick one or more days. If you pick multiple days, GymSync will create one workout entry per day.</p>
+
+        <form id="workoutForm" class="form">
+            <div class="row">
+                <label>
+                    Workout description
+                    <input id="description" type="text" maxlength="255" placeholder="e.g., Leg Day" required />
+                </label>
+
+                <label>
+                    Duration (minutes)
+                    <input id="duration" type="number" min="5" max="300" step="5" value="60" required />
+                </label>
+            </div>
+
+            <fieldset class="days">
+                <legend>Days of the week</legend>
+                <label><input type="checkbox" name="days" value="Mon" /> Mon</label>
+                <label><input type="checkbox" name="days" value="Tue" /> Tue</label>
+                <label><input type="checkbox" name="days" value="Wed" /> Wed</label>
+                <label><input type="checkbox" name="days" value="Thu" /> Thu</label>
+                <label><input type="checkbox" name="days" value="Fri" /> Fri</label>
+                <label><input type="checkbox" name="days" value="Sat" /> Sat</label>
+                <label><input type="checkbox" name="days" value="Sun" /> Sun</label>
+            </fieldset>
+
+            <label class="toggle">
+                <input id="isRecurring" type="checkbox" checked />
+                <span>Recurring weekly</span>
+            </label>
+
+            <div class="actions">
+                <button type="submit">Add Workout</button>
+                <button type="button" id="clearBtn" class="secondary">Clear</button>
+            </div>
+
+            <p id="msg" class="msg" aria-live="polite"></p>
+        </form>
+    </section>
+
+    <section class="card">
+        <div class="listHeader">
+            <h2>Planned Workouts</h2>
+            <div class="listActions">
+                <select id="filterDay">
+                    <option value="All">All days</option>
+                    <option value="Mon">Mon</option><option value="Tue">Tue</option><option value="Wed">Wed</option>
+                    <option value="Thu">Thu</option><option value="Fri">Fri</option><option value="Sat">Sat</option><option value="Sun">Sun</option>
+                </select>
+                <button type="button" id="wipeBtn" class="danger">Delete all</button>
+            </div>
+        </div>
+
+        <div id="workoutList" class="workoutList"></div>
+    </section>
+</main>
+
+<script src="js/planner.js"></script>
+
+<div id="gymsync-sidenav" style="height: 100%; width: 0; position: fixed; z-index: 9999; top: 0; left: 0; background-color: #070303; overflow-x: hidden; transition: 0.3s; padding-top: 60px; border-right: 1px solid #762329; box-shadow: 4px 0 10px rgba(0,0,0,0.5);">
+    <a href="javascript:void(0)" onclick="closeNav()" style="position: absolute; top: 10px; right: 20px; font-size: 36px; color: #c7a8a9; text-decoration: none;">&times;</a>
+    <a href="index.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #f4e2e2; display: block; transition: 0.3s; border-bottom: 1px solid rgba(199, 168, 169, 0.15);">Dashboard</a>
+    <a href="planner.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #f4e2e2; display: block; transition: 0.3s; border-bottom: 1px solid rgba(199, 168, 169, 0.15);">Planner</a>
+    <a href="workout.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #f4e2e2; display: block; transition: 0.3s; border-bottom: 1px solid rgba(199, 168, 169, 0.15);">Active Workout</a>
+    <a href="landing.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #f4e2e2; display: block; transition: 0.3s; border-bottom: 1px solid rgba(199, 168, 169, 0.15);">Logout</a>
+</div>
+
+<button onclick="openNav()" style="position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 9998; background-color: #e03939; color: white; border: none; padding: 12px 15px; cursor: pointer; border-radius: 0 8px 8px 0; font-size: 16px; font-weight: bold; box-shadow: 2px 2px 8px rgba(0,0,0,0.4);">
+    &#9776; Menu
+</button>
+
+<script>
+    function openNav() {
+        document.getElementById("gymsync-sidenav").style.width = "250px";
+    }
+    function closeNav() {
+        document.getElementById("gymsync-sidenav").style.width = "0";
+    }
+</script>
+</body>
+</html>

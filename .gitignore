@@ -1,2 +1,4 @@
 src/backend/node_modules/
+postgres_data/
+.idea
 .env

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymSync | Create Workout</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dashboard-body">
+<nav class="navbar">
+    <h1 class="logo">GymSync</h1>
+    <div class="nav-links">
+        <a href="index.html" class="nav-item">Cancel</a>
+    </div>
+</nav>
+
+<main class="dashboard-container">
+    <header class="dashboard-header workout-header">
+        <div style="width: 100%;">
+            <input type="text" class="workout-title-input" placeholder="Workout Title (e.g., Upper Body Power)" value="Upper Body Power">
+            <p class="workout-subtitle">Build your routine block by block</p>
+        </div>
+    </header>
+
+    <div id="notebook-container" class="exercise-container">
+        <section class="card exercise-card">
+            <div class="chunk-header">
+                <input type="text" class="chunk-title" placeholder="Exercise Name (e.g., Bench Press)">
+                <button type="button" class="delete-chunk-btn" onclick="this.closest('.card').remove()" title="Remove Exercise">&times;</button>
+            </div>
+            <div class="chunk-body">
+                <div class="chunk-stats">
+                    <label>Sets <input type="number" min="1" placeholder="4" class="inline-input"></label>
+                    <label>Reps <input type="number" min="1" placeholder="8" class="inline-input"></label>
+                </div>
+                <input type="text" class="chunk-desc full-width-input" placeholder="Notes (e.g., 135 lbs, 90 sec rest)">
+            </div>
+        </section>
+    </div>
+
+    <button class="btn-secondary add-chunk-btn" onclick="addExerciseChunk()">+ Add Exercise Block</button>
+
+    <div class="finish-container">
+        <a href="index.html" style="text-decoration: none;">
+            <button class="btn-primary finish-btn">Save Workout</button>
+        </a>
+    </div>
+</main>
+
+<div id="gymsync-sidenav" style="height: 100%; width: 0; position: fixed; z-index: 9999; top: 0; left: 0; background-color: #121b2e; overflow-x: hidden; transition: 0.3s; padding-top: 60px; border-right: 1px solid #223255; box-shadow: 4px 0 10px rgba(0,0,0,0.5);">
+    <a href="javascript:void(0)" onclick="closeNav()" style="position: absolute; top: 10px; right: 20px; font-size: 36px; color: #9fb0d0; text-decoration: none;">&times;</a>
+    <a href="index.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #e8eefc; display: block; transition: 0.3s; border-bottom: 1px solid #223255;">Dashboard</a>
+    <a href="planner.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #e8eefc; display: block; transition: 0.3s; border-bottom: 1px solid #223255;">Planner</a>
+    <a href="workout.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #e8eefc; display: block; transition: 0.3s; border-bottom: 1px solid #223255;">Create Workout</a>
+    <a href="landing.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #e8eefc; display: block; transition: 0.3s; border-bottom: 1px solid #223255;">Logout</a>
+</div>
+
+<button onclick="openNav()" style="position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 9998; background-color: #e03939; color: white; border: none; padding: 12px 15px; cursor: pointer; border-radius: 0 8px 8px 0; font-size: 16px; font-weight: bold; box-shadow: 2px 2px 8px rgba(0,0,0,0.4);">
+    &#9776; Menu
+</button>
+
+<script>
+    // Side Nav Logic
+    function openNav() {
+        document.getElementById("gymsync-sidenav").style.width = "250px";
+    }
+    function closeNav() {
+        document.getElementById("gymsync-sidenav").style.width = "0";
+    }
+
+    // Add new exercise block, formatted as a dashboard card
+    function addExerciseChunk() {
+        const container = document.getElementById('notebook-container');
+
+        const chunk = document.createElement('section');
+        chunk.className = 'card exercise-card';
+
+        chunk.innerHTML = `
+            <div class="chunk-header">
+                <input type="text" class="chunk-title" placeholder="Exercise Name (e.g., Squat)">
+                <button type="button" class="delete-chunk-btn" onclick="this.closest('.card').remove()" title="Remove Exercise">&times;</button>
+            </div>
+            <div class="chunk-body">
+                <div class="chunk-stats">
+                    <label>Sets <input type="number" min="1" placeholder="3" class="inline-input"></label>
+                    <label>Reps <input type="number" min="1" placeholder="10" class="inline-input"></label>
+                </div>
+                <input type="text" class="chunk-desc full-width-input" placeholder="Notes (e.g., 225 lbs, control the eccentric)">
+            </div>
+        `;
+
+        container.appendChild(chunk);
+    }
+</script>
+</body>
+</html>

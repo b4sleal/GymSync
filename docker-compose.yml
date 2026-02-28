@@ -1,0 +1,13 @@
+
+services:
+  db:
+    image: postgres:latest
+    container_name: gymsync_db
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: gymsync
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql

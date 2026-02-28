@@ -1,0 +1,223 @@
+:root {
+    --bg: #070303;
+    --card: rgba(118, 35, 41, 0.15); /* Faint secondary color matching style.css */
+    --text: #f4e2e2;
+    --muted: #c7a8a9; /* Primary color */
+    --line: #762329; /* Secondary color */
+    --btn: #e03939; /* Accent color */
+    --btn2: transparent;
+    --danger: #ff4d5f; /* Slightly brighter red for destructive actions */
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    /* Adding left padding to prevent content from hiding under the fixed menu button */
+    padding-left: 40px;
+}
+
+.container {
+    max-width: 980px;
+    margin: 40px auto;
+    padding: 0 16px;
+    display: grid;
+    gap: 25px;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px; /* Matched to style.css */
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+h1, h2 {
+    margin: 0 0 10px;
+    color: var(--btn); /* Accent color for headings */
+}
+
+.muted {
+    color: var(--muted);
+    margin-top: 0;
+}
+
+.form .row {
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    gap: 12px;
+}
+
+label {
+    display: grid;
+    gap: 6px;
+    font-size: 0.95rem;
+    color: var(--muted);
+    font-weight: bold;
+}
+
+input[type="text"], input[type="number"], select {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 10px 12px;
+    color: var(--text);
+    outline: none;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, select:focus {
+    outline: 1px solid var(--muted);
+}
+
+.days {
+    margin: 14px 0 8px;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 12px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.days legend {
+    color: var(--muted);
+    padding: 0 6px;
+    font-weight: bold;
+}
+
+.days label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 6px 10px 6px 0;
+    color: var(--text);
+    font-weight: normal;
+}
+
+.days input[type="checkbox"] {
+    accent-color: var(--btn);
+}
+
+.toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+    color: var(--muted);
+    font-weight: normal;
+}
+
+.toggle input[type="checkbox"] {
+    accent-color: var(--btn);
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+button {
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    color: white;
+    background: var(--btn);
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: var(--line);
+}
+
+button.secondary {
+    background: var(--btn2);
+    color: var(--muted);
+    border: 1px dashed var(--muted);
+}
+
+button.secondary:hover {
+    background-color: rgba(199, 168, 169, 0.1); /* Faint primary on hover */
+}
+
+button.danger {
+    background: var(--danger);
+}
+
+button.danger:hover {
+    background-color: #cc0000;
+}
+
+.msg {
+    margin: 10px 0 0;
+    min-height: 18px;
+    color: var(--muted);
+}
+
+.listHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.listActions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.workoutList {
+    display: grid;
+    gap: 10px;
+}
+
+.item {
+    border: 1px solid rgba(199, 168, 169, 0.15);
+    border-radius: 5px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    display: grid;
+    gap: 8px;
+}
+
+.itemTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.badge {
+    font-size: 0.8rem;
+    color: var(--text);
+    padding: 4px 10px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background-color: var(--line);
+    font-weight: bold;
+}
+
+.itemActions {
+    display: flex;
+    gap: 8px;
+}
+
+.itemActions button {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.small {
+    color: var(--muted);
+    font-size: 0.9rem;
+}

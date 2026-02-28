@@ -1,14 +1,18 @@
-require('dotenv').config();
-const express = require('express');
 const path = require('path');
+const express = require('express');
+
+require('dotenv').config({ path: path.join(__dirname, '../../.env') });
+require('./config/db');
 
 const app = express();
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, '../frontend'), { index: false }));
+
+app.use('/api/auth', require('./routes/authRoutes'));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/index.html'));
+    res.sendFile(path.join(__dirname, '../frontend/landing.html'));
 });
 
 const PORT = process.env.PORT || 8000;
