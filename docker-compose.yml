@@ -1,8 +1,19 @@
-
 services:
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
+    depends_on:
+      backend:
+        condition: service_healthy
+    profiles: ["tunnel"]
+
   db:
-    image: postgres:latest
+    image: postgres:16
     container_name: gymsync_db
+    restart: unless-stopped
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: 1234
@@ -10,4 +21,37 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - ./postgres_data:/var/lib/postgresql
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d gymsync"]
+      interval: 30s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_URL: ${DB_URL}
+      PORT: ${PORT}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      GEMINI_MODEL: ${GEMINI_MODEL}
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
+    ports:
+      - "8000:8000"
+    command: npm run dev
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+volumes:
+  pg_data:

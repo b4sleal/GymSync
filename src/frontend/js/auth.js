@@ -1,82 +1,90 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('login-form');
-    const registerForm = document.getElementById('register-form');
-    const toggleLink = document.getElementById('toggle-link');
-    const toggleText = document.getElementById('toggle-text');
-    const toggleContainer = document.querySelector('.toggle-container');
+document.addEventListener("DOMContentLoaded", () => {
+    const loginForm = document.getElementById("login-form");
+    const registerForm = document.getElementById("register-form");
+    const toggleText = document.getElementById("toggle-text");
+    const toggleContainer = document.querySelector(".toggle-container");
 
-    toggleContainer.addEventListener('click', (e) => {
-        if (e.target.id === 'toggle-link') {
-            e.preventDefault();
+    function showError(message) {
+        alert(message || "Something went wrong.");
+    }
 
-            loginForm.classList.toggle('hidden');
-            registerForm.classList.toggle('hidden');
-
-            if (loginForm.classList.contains('hidden')) {
-                toggleText.innerHTML = `Have an account? <a href="#" id="toggle-link">Log in</a>`;
-            } else {
-                toggleText.innerHTML = `Don\'t have an account? <a href="#" id="toggle-link">Sign up</a>`;
-            }
+    function saveSession(data) {
+        localStorage.setItem("gymsync_user_id", String(data.userId));
+        if (data.username) {
+            localStorage.setItem("gymsync_username", data.username);
         }
-    })
+    }
 
-    registerForm.addEventListener('submit', async (e) => {
+    toggleContainer.addEventListener("click", (e) => {
+        if (e.target.id !== "toggle-link") {
+            return;
+        }
+
         e.preventDefault();
+        loginForm.classList.toggle("hidden");
+        registerForm.classList.toggle("hidden");
 
-        // Ensure these IDs match your HTML input tags
-        const username = document.getElementById('reg-username').value;
-        const email = document.getElementById('reg-email').value;
-        const password = document.getElementById('reg-password').value;
-
-        try {
-            const response = await fetch('/api/auth/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, email, password })
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                // Save user ID to session so we can load their specific workouts later
-                localStorage.setItem('userId', data.userId);
-                window.location.href = '/index.html';
-            } else {
-                // This will show "Username or Email already in use" from your controller
-                alert(data.message);
-            }
-        } catch (error) {
-            console.error('Registration error:', error);
-            alert('Could not connect to server. Check if Docker is running!');
+        if (loginForm.classList.contains("hidden")) {
+            toggleText.innerHTML = `Have an account? <a href="#" id="toggle-link">Log in</a>`;
+        } else {
+            toggleText.innerHTML = `Don't have an account? <a href="#" id="toggle-link">Sign up</a>`;
         }
     });
 
-    // --- 3. LOGIN SUBMIT ---
-    loginForm.addEventListener('submit', async (e) => {
+    registerForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        // Changed ID from 'login-email' to 'login-identifier' to be more accurate
-        const identifier = document.getElementById('login-identifier').value;
-        const password = document.getElementById('login-password').value;
+        const username = document.getElementById("reg-username").value.trim();
+        const email = document.getElementById("reg-email").value.trim();
+        const password = document.getElementById("reg-password").value;
 
         try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ identifier, password }) // Send identifier
+            const response = await fetch("/api/auth/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, email, password }),
             });
 
             const data = await response.json();
 
-            if (response.ok) {
-                localStorage.setItem('userId', data.userId);
-                window.location.href = '/index.html';
-            } else {
-                alert(data.message || 'Login failed');
+            if (!response.ok) {
+                throw new Error(data.message || "Registration failed.");
             }
+
+            saveSession({
+                userId: data.userId,
+                username,
+            });
+
+            window.location.href = "index.html";
         } catch (error) {
-            console.error('Login error:', error);
-            alert('Server connection failed.');
+            showError(error.message);
+        }
+    });
+
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const identifier = document.getElementById("login-text").value.trim();
+        const password = document.getElementById("login-password").value;
+
+        try {
+            const response = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ identifier, password }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Login failed.");
+            }
+
+            saveSession(data);
+            window.location.href = "index.html";
+        } catch (error) {
+            showError(error.message);
         }
     });
 });

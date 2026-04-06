@@ -1,9 +1,241 @@
+:root {
+    --text: #f4e2e2;
+    --background: #070303;
+    --primary: #c7a8a9;
+    --secondary: #762329;
+    --accent: #e03939;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+}
+
+/* Auth Container */
+.auth-container {
+    width: 100%;
+    max-width: 350px;
+    margin: 100px auto; /* Centered for landing page */
+}
+
+.auth-box {
+    background-color: var(--background);
+    border: 1px solid var(--primary);
+    padding: 40px;
+    text-align: center;
+}
+
+.logo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--accent);
+    margin-bottom: 30px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--secondary);
+    background-color: rgba(0, 0, 0, 0.2);
+    color: var(--text);
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+input:focus {
+    outline: 1px solid var(--primary);
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary);
+}
+
+.divider {
+    margin: 20px 0;
+    line-height: 0.1rem;
+    border-bottom: 1px solid var(--primary);
+}
+
+.divider span {
+    background: var(--background);
+    padding: 0 10px;
+    color: var(--primary);
+    font-size: 0.8rem;
+}
+
+.toggle-container a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
+}
+
 /* =========================================
-   NOTEBOOK WORKOUT CREATOR STYLES (MATCHES DASHBOARD)
+   DASHBOARD SPECIFIC STYLES
+   ========================================= */
+
+.dashboard-body {
+    display: block;
+    height: auto;
+    min-height: 100vh;
+    padding: 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: var(--secondary);
+    border-bottom: 2px solid var(--accent);
+}
+
+.navbar .logo {
+    margin-bottom: 0;
+    font-size: 1.8rem;
+}
+
+.nav-links a {
+    color: var(--text);
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+.dashboard-container {
+    max-width: 900px; /* narrowed slightly for better notebook readability */
+    margin: 0 auto;
+    padding: 30px 20px 80px 40px; /* Extra left padding for side nav button */
+}
+
+.dashboard-header h2 {
+    color: var(--primary);
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1.5fr;
+    gap: 20px;
+}
+
+@media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background-color: rgba(118, 35, 41, 0.15);
+    border: 1px solid var(--secondary);
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: var(--accent);
+    border-bottom: 1px solid var(--secondary);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.streak-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.streak-number {
+    font-size: 4.5rem;
+    font-weight: bold;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+}
+
+.streak-text {
+    font-size: 1.2rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.workout-list, .history-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.workout-list li, .history-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(199, 168, 169, 0.15);
+}
+
+.workout-list li:last-child, .history-list li:last-child {
+    border-bottom: none;
+}
+
+.history-info strong {
+    display: block;
+    color: var(--text);
+    font-size: 1.1rem;
+}
+
+.history-info .date {
+    font-size: 0.85rem;
+    color: var(--primary);
+}
+
+.duration {
+    font-weight: bold;
+    color: var(--accent);
+}
+
+.start-btn {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    padding: 15px;
+}
+
+/* =========================================
+   NOTEBOOK WORKOUT CREATOR STYLES
    ========================================= */
 
 .workout-header {
     margin-bottom: 30px;
+    border-bottom: 2px solid var(--secondary);
+    padding-bottom: 15px;
 }
 
 .workout-title-input {
@@ -15,7 +247,6 @@
     border-bottom: 1px dashed transparent;
     padding: 5px 0;
     margin-bottom: 5px;
-    width: 100%;
 }
 
 .workout-title-input:focus {
@@ -32,32 +263,47 @@
 .exercise-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
 }
 
-/* Modifying the card header specifically for the input */
+/* Jupyter Notebook Style Chunk */
+.exercise-chunk {
+    background-color: rgba(118, 35, 41, 0.05);
+    border: 1px solid var(--secondary);
+    border-left: 4px solid var(--secondary); /* Unfocused state */
+    padding: 20px;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Focus state mimics Jupyter active cell */
+.exercise-chunk:focus-within {
+    border-left: 4px solid var(--accent);
+    background-color: rgba(118, 35, 41, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
 .chunk-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--secondary);
-    padding-bottom: 10px;
     margin-bottom: 15px;
 }
 
 .chunk-title {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: bold;
     color: var(--accent);
     background: transparent;
     border: none;
-    width: 85%;
-    padding: 0;
-    margin: 0;
+    border-bottom: 1px solid var(--secondary);
+    padding: 5px;
+    width: 80%;
 }
 
 .chunk-title:focus {
     outline: none;
+    border-bottom: 1px solid var(--primary);
 }
 
 .delete-chunk-btn {
@@ -68,7 +314,6 @@
     cursor: pointer;
     line-height: 1;
     transition: color 0.2s;
-    padding: 0;
 }
 
 .delete-chunk-btn:hover {
@@ -94,46 +339,35 @@
     color: var(--primary);
 }
 
-/* Specific styling for inputs inside the cards so they blend in */
-.inline-input, .full-width-input {
-    background-color: rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--secondary);
-    color: var(--text);
-    border-radius: 4px;
-    padding: 8px 12px;
-}
-
-.inline-input {
+.chunk-stats input[type="number"] {
     width: 80px;
     margin-bottom: 0;
     text-align: center;
 }
 
-.full-width-input {
+.chunk-desc {
     width: 100%;
     margin-bottom: 0;
 }
 
-.inline-input:focus, .full-width-input:focus {
-    outline: 1px solid var(--primary);
-}
-
+/* Add New Chunk Button */
 .add-chunk-btn {
     width: 100%;
-    margin-top: 20px;
-    font-size: 1.1rem;
-    padding: 15px;
     background-color: transparent;
     color: var(--primary);
-    border: 2px dashed var(--primary);
-    border-radius: 8px;
+    border: 2px dashed var(--secondary);
+    padding: 15px;
+    border-radius: 4px;
     cursor: pointer;
+    margin-top: 15px;
+    font-size: 1.1rem;
     font-weight: bold;
     transition: all 0.3s;
 }
 
 .add-chunk-btn:hover {
     background-color: rgba(199, 168, 169, 0.1);
+    border-color: var(--primary);
     color: var(--text);
 }
 

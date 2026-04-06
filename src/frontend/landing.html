@@ -4,46 +4,43 @@
   <meta charset="UTF-8">
   <title>GymSync | Welcome</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/chat-widget.css">
 </head>
 <body>
-<div class="auth-container">
-  <div class="auth-box">
-    <h1 class="logo">GymSync</h1>
 
-    <form id="login-form">
-      <input type="email" id="login-email" placeholder="Email" required>
-      <input type="password" id="login-password" placeholder="Password" required>
-      <button type="submit" class="btn-primary">Login</button>
-    </form>
+<div class="main-wrapper auth-page-wrapper">
 
-    <form id="register-form" class="hidden">
-      <input type="text" id="reg-username" placeholder="Username" required>
-      <input type="email" id="reg-email" placeholder="Email" required>
-      <input type="password" id="reg-password" placeholder="Password" required>
-      <button type="submit" class="btn-primary">Register</button>
-    </form>
+  <div class="auth-container">
+    <div class="auth-box">
+      <h1 class="logo">GymSync</h1>
 
-    <div class="divider">
-      <span>OR</span>
-    </div>
+      <form id="login-form">
+        <input id="login-text" type="text" placeholder="Username/Email" required>
+        <input id="login-password" type="password" placeholder="Password" required>
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
 
-    <div class="toggle-container">
-      <div>
-        <p id="toggle-text">Don't have an account? <a href="#" id="toggle-link">Sign up</a></p>
+      <form id="register-form" class="hidden">
+        <input id="reg-username" type="text" placeholder="Username" required>
+        <input id="reg-email" type="email" placeholder="Email" required>
+        <input id="reg-password" type="password" placeholder="Password" required>
+        <button type="submit" class="btn-primary">Register</button>
+      </form>
+
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <div class="toggle-container">
+        <div>
+          <p id="toggle-text">Don't have an account? <a href="#" id="toggle-link">Sign up</a></p>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <script src="js/auth.js"></script>
-
-<script>
-  function openNav() {
-    document.getElementById("gymsync-sidenav").style.width = "250px";
-  }
-  function closeNav() {
-    document.getElementById("gymsync-sidenav").style.width = "0";
-  }
-</script>
+<script src="js/chat-widget.js"></script>
 </body>
 </html>

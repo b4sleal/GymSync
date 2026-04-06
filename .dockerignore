@@ -1,0 +1,9 @@
+# Ignore local node_modules
+node_modules
+*/node_modules
+src/backend/node_modules
+
+# Other good things to ignore to keep your image small
+npm-debug.log
+.git
+.env

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymSync | Social</title>
+    <link rel="stylesheet" href="css/chat-widget.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .social-shell {
+            max-width: 1400px;
+            margin: 28px auto;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: 1fr 3fr 1fr;
+            gap: 20px;
+        }
+        .user-card-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .follow-btn,
+        .following-btn {
+            border: 1px solid rgba(199, 168, 169, 0.22);
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .follow-btn {
+            background: #e03939;
+            color: #ffffff;
+            border-color: #e03939;
+        }
+
+        .following-btn {
+            background: transparent;
+            color: #f4e2e2;
+        }
+        .social-panel {
+            border: 1px solid rgba(199, 168, 169, 0.16);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.14);
+            padding: 16px;
+            min-height: 72vh;
+        }
+
+        .social-panel h2,
+        .social-panel h3 {
+            margin-top: 0;
+        }
+
+        .user-list,
+        .search-results {
+            display: grid;
+            gap: 10px;
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px;
+            border: 1px solid rgba(199, 168, 169, 0.14);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .user-card.clickable {
+            cursor: pointer;
+        }
+
+        .user-card.active {
+            border-color: #e03939;
+            box-shadow: 0 0 0 1px rgba(224, 57, 57, 0.28);
+        }
+
+        .user-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 999px;
+            background: #e03939;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .username {
+            font-weight: bold;
+            color: #f4e2e2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .chat-panel {
+            display: grid;
+            grid-template-rows: auto minmax(0, 1fr) auto;
+            gap: 14px;
+        }
+
+        .message-thread {
+            min-height: 0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            padding-right: 4px;
+        }
+
+        .message-bubble.mine {
+            align-self: flex-end;
+        }
+
+        .message-bubble.theirs {
+            align-self: flex-start;
+        }
+
+        .chat-header {
+            border-bottom: 1px solid rgba(199, 168, 169, 0.14);
+            padding-bottom: 12px;
+        }
+
+
+        .message-bubble {
+            max-width: 72%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            word-break: break-word;
+        }
+
+        .message-bubble.mine {
+            margin-left: auto;
+            background: rgba(224, 57, 57, 0.22);
+            border: 1px solid rgba(224, 57, 57, 0.32);
+        }
+
+        .message-bubble.theirs {
+            margin-right: auto;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(199, 168, 169, 0.18);
+        }
+
+        .message-time {
+            font-size: 0.76rem;
+            color: #c7a8a9;
+            margin-top: 6px;
+        }
+
+        .chat-form textarea {
+            min-height: 44px;
+            max-height: 120px;
+            height: 44px;
+            resize: vertical;
+        }
+
+        .chat-form textarea,
+        .search-box input {
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid #762329;
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #f4e2e2;
+            font: inherit;
+        }
+
+        .panel-muted,
+        .status-line {
+            color: #c7a8a9;
+        }
+
+        .status-line.error {
+            color: #ff9da7;
+        }
+
+        .search-box {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        @media (max-width: 1080px) {
+            .social-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .social-panel {
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+<nav class="navbar">
+    <h1 class="logo">GymSync</h1>
+    <div class="nav-links">
+        <a href="index.html" class="nav-item">Dashboard</a>
+        <a href="landing.html" class="nav-item">Logout</a>
+    </div>
+</nav>
+
+<main class="social-shell">
+    <section class="social-panel">
+        <h3>Your Followers</h3>
+        <p class="panel-muted">Click a followed user to open chat.</p>
+        <p id="followers-status" class="status-line"></p>
+        <div id="followers-list" class="user-list"></div>
+    </section>
+
+    <section class="social-panel chat-panel">
+        <div class="chat-header">
+            <h2 id="chat-title">Chat</h2>
+            <p id="chat-subtitle" class="panel-muted">Pick a user from the left or search on the right.</p>
+        </div>
+
+        <div id="message-thread" class="message-thread">
+            <div class="panel-muted">No conversation selected.</div>
+        </div>
+
+        <form id="dm-form" class="chat-form">
+            <textarea id="dm-input" maxlength="1000" placeholder="Send a message..." disabled></textarea>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span id="dm-status" class="status-line"></span>
+                <button type="submit" class="btn-primary" id="dm-send-btn" disabled>Send</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="social-panel">
+        <h3>Search for users</h3>
+        <div class="search-box">
+            <input id="user-search-input" type="text" placeholder="Search username..." />
+            <button id="user-search-btn" type="button" class="btn-primary">Search</button>
+        </div>
+        <p id="search-status" class="status-line"></p>
+        <div id="search-results" class="search-results"></div>
+    </section>
+</main>
+<div id="gymsync-sidenav" style="height: 100%; width: 0; position: fixed; z-index: 9999; top: 0; left: 0; background-color: #070303; overflow-x: hidden; transition: 0.3s; padding-top: 60px; border-right: 1px solid #762329; box-shadow: 4px 0 10px rgba(0,0,0,0.5);">
+    <a href="javascript:void(0)" onclick="closeNav()" style="position: absolute; top: 10px; right: 20px; font-size: 36px; color: #c7a8a9; text-decoration: none;">&times;</a>
+    <a href="index.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #f4e2e2; display: block; transition: 0.3s; border-bottom: 1px solid rgba(199, 168, 169, 0.15);">Dashboard</a>
+    <a href="planner.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #f4e2e2; display: block; transition: 0.3s; border-bottom: 1px solid rgba(199, 168, 169, 0.15);">Planner</a>
+    <a href="workout.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #f4e2e2; display: block; transition: 0.3s; border-bottom: 1px solid rgba(199, 168, 169, 0.15);">Active Workout</a>
+    <a href="chat.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #f4e2e2; display: block; transition: 0.3s; border-bottom: 1px solid rgba(199, 168, 169, 0.15);">Chat</a>
+    <a href="landing.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #f4e2e2; display: block; transition: 0.3s; border-bottom: 1px solid rgba(199, 168, 169, 0.15);">Logout</a>
+
+</div>
+
+<button onclick="openNav()" style="position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 9998; background-color: #e03939; color: white; border: none; padding: 12px 15px; cursor: pointer; border-radius: 0 8px 8px 0; font-size: 16px; font-weight: bold; box-shadow: 2px 2px 8px rgba(0,0,0,0.4);">
+    &#9776; Menu
+</button>
+
+<script>
+    function openNav() {
+        document.getElementById("gymsync-sidenav").style.width = "250px";
+    }
+    function closeNav() {
+        document.getElementById("gymsync-sidenav").style.width = "0";
+    }
+</script>
+<script src="js/chat-widget.js"></script>
+<script src="js/social.js"></script>
+</body>
+</html>

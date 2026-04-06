@@ -1,25 +1,24 @@
-const pg = require('pg');
+const pg = require("pg");
 const path = require("path");
 const fs = require("fs");
-const db_url = process.env.DB_URL;
+
+const dbUrl = process.env.DB_URL || "postgresql://root:1234@db:5432/gymsync";
 
 const pool = new pg.Pool({
-    connectionString: db_url
+    connectionString: dbUrl,
 });
 
-const initializeDatbase = async () => {
-
+async function initializeDatabase() {
     try {
-        const schemaPath = path.join(__dirname, '../../../database/schema.sql');
-        const schemaSql = fs.readFileSync(schemaPath, 'utf8');
+        const schemaPath = path.join(__dirname, "../../database/schema.sql");
+        const schemaSql = fs.readFileSync(schemaPath, "utf8");
 
         await pool.query(schemaSql);
-        console.log("Database initialized successfully (and tables)")
-    } catch (e) {
-        console.error(e)
+        console.log("Database initialized successfully.");
+    } catch (error) {
+        console.error("Database initialization failed.", error);
     }
 }
 
-initializeDatbase();
-
-module.exports = pool; // global access
+initializeDatabase();
+module.exports = pool;

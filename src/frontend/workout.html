@@ -3,56 +3,324 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GymSync | Create Workout</title>
+    <title>GymSync | Workout Templates</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chat-widget.css">
+    <style>
+        .workout-page {
+            margin: 20px auto;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: 1fr 1.35fr 1fr;
+            gap: 24px;
+        }
+
+        .right-column {
+            display: grid;
+            gap: 24px;
+        }
+
+        .panel-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .panel-title-row h3 {
+            margin: 0;
+        }
+
+        .template-list,
+        .library-list,
+        .selected-exercise-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .template-item,
+        .exercise-library-item,
+        .selected-exercise-item {
+            border: 1px solid rgba(199, 168, 169, 0.18);
+            border-radius: 8px;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.14);
+        }
+
+        .template-item.active {
+            border-color: #e03939;
+            box-shadow: 0 0 0 1px rgba(224, 57, 57, 0.3);
+        }
+
+        .template-item-header,
+        .exercise-row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .template-item-header h4,
+        .exercise-row-header h4 {
+            margin: 0 0 6px;
+            color: #f4e2e2;
+        }
+
+        .template-notes,
+        .exercise-meta,
+        .exercise-library-notes {
+            color: #c7a8a9;
+            white-space: pre-wrap;
+            margin: 8px 0 12px;
+        }
+
+        .exercise-preview {
+            margin: 0;
+            padding-left: 18px;
+            color: #f4e2e2;
+        }
+
+        .exercise-preview li {
+            margin-bottom: 6px;
+        }
+
+        .template-actions,
+        .exercise-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            border: 1px solid #762329;
+            background: transparent;
+            color: #f4e2e2;
+            border-radius: 4px;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-danger {
+            border: none;
+            background: #8f1f2a;
+            color: white;
+            border-radius: 4px;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .form-stack {
+            display: grid;
+            gap: 16px;
+        }
+
+        .form-stack textarea,
+        .form-stack input[type="text"],
+        .form-stack input[type="number"] {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid #762329;
+            border-radius: 4px;
+            box-sizing: border-box;
+            padding: 10px 12px;
+            color: #f4e2e2;
+            font: inherit;
+        }
+
+        .chunk-stats {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .chunk-stats label {
+            display: grid;
+            gap: 6px;
+            color: #c7a8a9;
+            font-weight: bold;
+        }
+
+        .inline-input {
+            width: 120px;
+        }
+
+        .status-line {
+            min-height: 22px;
+            color: #c7a8a9;
+        }
+
+        .status-line.error {
+            color: #ff9da7;
+        }
+
+        .empty-state {
+            color: #c7a8a9;
+            padding: 18px 0;
+        }
+
+        .picker {
+            border: 1px solid rgba(199, 168, 169, 0.18);
+            border-radius: 8px;
+            padding: 14px;
+            background: rgba(0, 0, 0, 0.12);
+        }
+
+        .picker h4 {
+            margin: 0 0 12px;
+            color: #f4e2e2;
+        }
+
+        .picker-scroll {
+            max-height: 260px;
+            overflow-y: auto;
+            display: grid;
+            gap: 10px;
+        }
+
+        .picker-item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px;
+            border: 1px solid rgba(199, 168, 169, 0.14);
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.14);
+        }
+
+        .small-muted {
+            color: #c7a8a9;
+            font-size: 0.92rem;
+        }
+
+        @media (max-width: 980px) {
+            .workout-page {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body class="dashboard-body">
 <nav class="navbar">
     <h1 class="logo">GymSync</h1>
     <div class="nav-links">
-        <a href="index.html" class="nav-item">Cancel</a>
+        <a href="index.html" class="nav-item">Dashboard</a>
+        <a href="landing.html" class="nav-item" id="logout-link">Logout</a>
     </div>
 </nav>
 
-<main class="dashboard-container">
-    <header class="dashboard-header workout-header">
-        <div style="width: 100%;">
-            <input type="text" class="workout-title-input" placeholder="Workout Title (e.g., Upper Body Power)" value="Upper Body Power">
-            <p class="workout-subtitle">Build your routine block by block</p>
+<main class="workout-page">
+    <section>
+        <div class="card">
+            <div class="panel-title-row">
+                <h3>Your Workout Templates</h3>
+                <button type="button" class="btn-secondary" id="new-workout-btn">+ New</button>
+            </div>
+            <p class="status-line" id="list-status"></p>
+            <div id="template-list" class="template-list"></div>
         </div>
-    </header>
+    </section>
 
-    <div id="notebook-container" class="exercise-container">
-        <section class="card exercise-card">
-            <div class="chunk-header">
-                <input type="text" class="chunk-title" placeholder="Exercise Name (e.g., Bench Press)">
-                <button type="button" class="delete-chunk-btn" onclick="this.closest('.card').remove()" title="Remove Exercise">&times;</button>
+    <section class="card">
+            <div class="panel-title-row">
+                <h3 id="editor-title">Create Workout Template</h3>
             </div>
-            <div class="chunk-body">
-                <div class="chunk-stats">
-                    <label>Sets <input type="number" min="1" placeholder="4" class="inline-input"></label>
-                    <label>Reps <input type="number" min="1" placeholder="8" class="inline-input"></label>
+
+            <form id="workout-form" class="form-stack">
+                <label>
+                    Title
+                    <input type="text" id="workout-title" maxlength="100" placeholder="Upper Body Workout" required>
+                </label>
+
+                <label>
+                    Notes
+                    <textarea id="workout-notes" rows="4" placeholder="Some workouts I do for my upper body"></textarea>
+                </label>
+
+                <div class="picker">
+                    <h4>Add Created Exercises</h4>
+                    <div id="exercise-picker" class="picker-scroll"></div>
                 </div>
-                <input type="text" class="chunk-desc full-width-input" placeholder="Notes (e.g., 135 lbs, 90 sec rest)">
-            </div>
+
+                <div>
+                    <div class="panel-title-row" style="margin-bottom: 10px;">
+                        <h3 style="font-size: 1.05rem;">Selected Exercises</h3>
+                    </div>
+                    <div id="selected-exercise-list" class="selected-exercise-list"></div>
+                </div>
+
+                <p class="status-line" id="form-status"></p>
+
+                <div class="template-actions">
+                    <button type="submit" class="btn-primary" id="save-workout-btn">Save Workout</button>
+                    <button type="button" class="btn-secondary" id="cancel-edit-btn">Clear</button>
+                    <button type="button" class="btn-danger" id="delete-current-btn" style="display:none;">Delete</button>
+                </div>
+            </form>
         </section>
-    </div>
 
-    <button class="btn-secondary add-chunk-btn" onclick="addExerciseChunk()">+ Add Exercise Block</button>
+    <section class="card">
+        <div class="panel-title-row">
+            <h3 id="exercise-editor-title">Create Exercise</h3>
+        </div>
 
-    <div class="finish-container">
-        <a href="index.html" style="text-decoration: none;">
-            <button class="btn-primary finish-btn">Save Workout</button>
-        </a>
-    </div>
+        <form id="exercise-form" class="form-stack">
+            <label>
+                Exercise Name
+                <input type="text" id="exercise-name" maxlength="100" placeholder="Bench Press" required>
+            </label>
+
+            <div class="chunk-stats">
+                <label>
+                    Sets
+                    <input type="number" min="1" class="inline-input" id="exercise-sets" value="3">
+                </label>
+
+                <label>
+                    Reps
+                    <input type="number" min="1" class="inline-input" id="exercise-reps" value="10">
+                </label>
+
+                <label>
+                    Weight (lbs)
+                    <input type="number" min="0" class="inline-input" id="exercise-weight" value="">
+                </label>
+            </div>
+
+            <label>
+                Notes
+                <textarea id="exercise-notes" rows="4" placeholder="15 sec rest, keep elbows tucked"></textarea>
+            </label>
+
+            <p class="status-line" id="exercise-form-status"></p>
+
+            <div class="template-actions">
+                <button type="submit" class="btn-primary">Save Exercise</button>
+                <button type="button" class="btn-secondary" id="clear-exercise-btn">Clear</button>
+            </div>
+        </form>
+
+        <div style="margin-top: 24px;">
+            <div class="panel-title-row">
+                <h3 style="font-size: 1.05rem;">Created Exercises</h3>
+            </div>
+            <p class="status-line" id="exercise-list-status"></p>
+            <div id="exercise-library-list" class="library-list"></div>
+        </div>
+    </section>
 </main>
 
-<div id="gymsync-sidenav" style="height: 100%; width: 0; position: fixed; z-index: 9999; top: 0; left: 0; background-color: #121b2e; overflow-x: hidden; transition: 0.3s; padding-top: 60px; border-right: 1px solid #223255; box-shadow: 4px 0 10px rgba(0,0,0,0.5);">
-    <a href="javascript:void(0)" onclick="closeNav()" style="position: absolute; top: 10px; right: 20px; font-size: 36px; color: #9fb0d0; text-decoration: none;">&times;</a>
-    <a href="index.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #e8eefc; display: block; transition: 0.3s; border-bottom: 1px solid #223255;">Dashboard</a>
-    <a href="planner.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #e8eefc; display: block; transition: 0.3s; border-bottom: 1px solid #223255;">Planner</a>
-    <a href="workout.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #e8eefc; display: block; transition: 0.3s; border-bottom: 1px solid #223255;">Create Workout</a>
-    <a href="landing.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #e8eefc; display: block; transition: 0.3s; border-bottom: 1px solid #223255;">Logout</a>
+<div id="gymsync-sidenav" style="height: 100%; width: 0; position: fixed; z-index: 9999; top: 0; left: 0; background-color: #070303; overflow-x: hidden; transition: 0.3s; padding-top: 60px; border-right: 1px solid #762329; box-shadow: 4px 0 10px rgba(0,0,0,0.5);">
+    <a href="javascript:void(0)" onclick="closeNav()" style="position: absolute; top: 10px; right: 20px; font-size: 36px; color: #c7a8a9; text-decoration: none;">&times;</a>
+    <a href="index.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #f4e2e2; display: block; transition: 0.3s; border-bottom: 1px solid rgba(199, 168, 169, 0.15);">Dashboard</a>
+    <a href="planner.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #f4e2e2; display: block; transition: 0.3s; border-bottom: 1px solid rgba(199, 168, 169, 0.15);">Planner</a>
+    <a href="workout.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #f4e2e2; display: block; transition: 0.3s; border-bottom: 1px solid rgba(199, 168, 169, 0.15);">Active Workout</a>
+    <a href="chat.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #f4e2e2; display: block; transition: 0.3s; border-bottom: 1px solid rgba(199, 168, 169, 0.15);">Chat</a>
+    <a href="landing.html" style="padding: 15px 25px; text-decoration: none; font-size: 18px; color: #f4e2e2; display: block; transition: 0.3s; border-bottom: 1px solid rgba(199, 168, 169, 0.15);">Logout</a>
 </div>
 
 <button onclick="openNav()" style="position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 9998; background-color: #e03939; color: white; border: none; padding: 12px 15px; cursor: pointer; border-radius: 0 8px 8px 0; font-size: 16px; font-weight: bold; box-shadow: 2px 2px 8px rgba(0,0,0,0.4);">
@@ -60,37 +328,14 @@
 </button>
 
 <script>
-    // Side Nav Logic
     function openNav() {
         document.getElementById("gymsync-sidenav").style.width = "250px";
     }
     function closeNav() {
         document.getElementById("gymsync-sidenav").style.width = "0";
     }
-
-    // Add new exercise block, formatted as a dashboard card
-    function addExerciseChunk() {
-        const container = document.getElementById('notebook-container');
-
-        const chunk = document.createElement('section');
-        chunk.className = 'card exercise-card';
-
-        chunk.innerHTML = `
-            <div class="chunk-header">
-                <input type="text" class="chunk-title" placeholder="Exercise Name (e.g., Squat)">
-                <button type="button" class="delete-chunk-btn" onclick="this.closest('.card').remove()" title="Remove Exercise">&times;</button>
-            </div>
-            <div class="chunk-body">
-                <div class="chunk-stats">
-                    <label>Sets <input type="number" min="1" placeholder="3" class="inline-input"></label>
-                    <label>Reps <input type="number" min="1" placeholder="10" class="inline-input"></label>
-                </div>
-                <input type="text" class="chunk-desc full-width-input" placeholder="Notes (e.g., 225 lbs, control the eccentric)">
-            </div>
-        `;
-
-        container.appendChild(chunk);
-    }
 </script>
+<script src="js/workout.js"></script>
+<script src="js/chat-widget.js"></script>
 </body>
 </html>
